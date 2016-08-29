@@ -21,8 +21,8 @@ dependencies:
         sudo apt-get update;
         sudo apt-get install python-openssl python3-openssl ;
         sudo rm -rf /opt/google-cloud-sdk/ ;
-        sudo cat ~/.bashrc | sudo sed -e "s/source '\/opt\/google-cloud-sdk\/path.bash.inc'//" > ~/.bashrc
-        sudo cat ~/.bashrc | sudo sed -e "s/source '\/opt\/google-cloud-sdk\/completion.bash.inc'//" > ~/.bashrc
+        sudo cat ~/.bashrc | sudo sed -e "s/source '\/opt\/google-cloud-sdk\/path.bash.inc'//" > ~/.bashrc ;
+        sudo cat ~/.bashrc | sudo sed -e "s/source '\/opt\/google-cloud-sdk\/completion.bash.inc'//" > ~/.bashrc ;
         curl https://sdk.cloud.google.com | bash ;
         source ~/.bashrc ;
 deployment:
