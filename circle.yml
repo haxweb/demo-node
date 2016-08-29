@@ -17,13 +17,12 @@ machine:
 dependencies:
   pre:
     - >
-       if [ -n "$GCLOUD_SERVICE_KEY" ]; then sudo apt-get remove python-virtualenv python-openssl python3-openssl ;
+        sudo apt-get remove python-virtualenv python-openssl python3-openssl ;
         sudo apt-get update;
         sudo apt-get install python-openssl python3-openssl ;
         sudo rm -rf /opt/google-cloud-sdk/ ;
         curl https://sdk.cloud.google.com | bash ;
         source ~/.bashrc ;
-       fi
 deployment:
   prod:
     branch: master
