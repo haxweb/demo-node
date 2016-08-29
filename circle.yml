@@ -15,10 +15,7 @@ machine:
 dependencies:
   pre:
     - echo $ACCT_AUTH | base64 --decode -i > ${HOME}/account-auth.json
-    - sudo apt-get remove python-virtualenv python-openssl python3-openssl
-    - sudo apt-get update
-    - sudo apt-get install python-openssl python3-openssl
-    - source ~/.bashrc
+    - pip install pyopenssl
     - sudo /opt/google-cloud-sdk/bin/gcloud --quiet components update
     - sudo /opt/google-cloud-sdk/bin/gcloud --quiet components update kubectl
     - sudo /opt/google-cloud-sdk/bin/gcloud auth activate-service-account ${SERVICE_ACCOUNT} --key-file ${HOME}/account-auth.json
