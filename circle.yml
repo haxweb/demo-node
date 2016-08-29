@@ -19,15 +19,16 @@ deployment:
     branch: master
     commands:
       - echo ${ACCT_AUTH} | base64 -d > account-auth.json
+      - cat account-auth.json
       - sudo apt-get remove python-virtualenv python-openssl python3-openssl
       - sudo apt-get update
       - sudo apt-get install python-openssl python3-openssl
       - sudo rm -rf /opt/google-cloud-sdk/
       - export CLOUDSDK_CORE_DISABLE_PROMPTS=1
       - export CLOUDSDK_PYTHON_SITEPACKAGES=1
-      - wget https://storage.cloud.google.com/cloud-sdk-release/google-cloud-sdk-105.0.0-linux-x86_64.tar.gz
-      - tar -zxvf google-cloud-sdk-105.0.0-linux-x86_64.tar.gz
-      - rm google-cloud-sdk-105.0.0-linux-x86_64.tar.gz
+      - wget https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-sdk-123.0.0-linux-x86_64.tar.gz
+      - tar -zxvf google-cloud-sdk-123.0.0-linux-x86_64.tar.gz
+      - rm google-cloud-sdk-123.0.0-linux-x86_64.tar.gz
       - google-cloud-sdk/install.sh --quiet --path-update false --usage-reporting false --command-completion false --bash-completion false
       - source ~/.bashrc
       - export CLOUDSDK_CORE_DISABLE_PROMPTS=0
