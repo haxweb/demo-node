@@ -15,12 +15,18 @@ machine:
     - docker
 
 dependencies:
-  cache_directories:
-    - ~/google-cloud-sdk
-    - ~/docker
-  override:
-    - pip install pyopenssl
-    - if [ ! -d ~/google-cloud-sdk ]; then curl https://sdk.cloud.google.com | bash; ~/google-cloud-sdk/bin/gcloud components update preview; fi
+  pre:
+     ->
+       export DIRECTORY="/home/GoogleCloudSDK/google-cloud-sdk/bin" ;
+       if [ ! -d "$DIRECTORY" ]; then ;
+        cd /home ;
+	wget https://dl.google.com/dl/cloudsdk/release/google-cloud-sdk.zip -O google-cloud-sdk.zip ;
+	unzip -o google-cloud-sdk.zip -d ./GoogleCloudSDK/ ;
+	./GoogleCloudSDK/google-cloud-sdk/install.sh ;
+       fi ;
+export PATH=/var/jenkins_home/GoogleCloudSDK/google-cloud-sdk/bin:$PATH
+
+gcloud --quiet components update
 deployment:
   prod:
     branch: master
