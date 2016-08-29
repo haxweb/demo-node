@@ -1,6 +1,8 @@
 machine:
   environment:
     SERVICE_ACCOUNT: haxweb-fr@haxweb-fr.iam.gserviceaccount.com
+    CLOUDSDK_CORE_DISABLE_PROMPTS: 1
+    CLOUDSDK_INSTALL_DIR: /tmp
     CLOUDSDK_PYTHON_SITEPACKAGES: 1
     APP_NAME: demo-node
     DOCKER_IMAGE: demo-node
@@ -15,10 +17,13 @@ machine:
 dependencies:
   cache_directories:
     - ~/google-cloud-sdk
-  override:
-    - pip install pyopenssl
-    - if [ ! -d ~/google-cloud-sdk ]; then curl https://sdk.cloud.google.com | bash; ~/google-cloud-sdk/bin/gcloud components update preview; fi
-
+  pre:
+    - >
+        sudo apt-get update;
+        sudo apt-get install python-openssl python3-openssl ;
+        sudo rm -rf /opt/google-cloud-sdk/ ;
+        curl https://sdk.cloud.google.com | bash ;
+        source ~/.bashrc ;
 deployment:
   prod:
     branch: master
