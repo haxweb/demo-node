@@ -13,9 +13,11 @@ machine:
     - docker
 
 dependencies:
-  pre:
-    - echo $ACCT_AUTH | base64 --decode -i > ${HOME}/account-auth.json
+  cache_directories:
+    - ~/google-cloud-sdk
+  override:
     - pip install pyopenssl
+    - if [ ! -d ~/google-cloud-sdk ]; then curl https://sdk.cloud.google.com | bash; ~/google-cloud-sdk/bin/gcloud components update preview; fi
 
 deployment:
   prod:
