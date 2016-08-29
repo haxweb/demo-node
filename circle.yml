@@ -2,8 +2,8 @@ machine:
   environment:
     SERVICE_ACCOUNT: haxweb-fr@haxweb-fr.iam.gserviceaccount.com
     CLOUDSDK_CORE_DISABLE_PROMPTS: 1
-    CLOUDSDK_INSTALL_DIR: /tmp
     CLOUDSDK_PYTHON_SITEPACKAGES: 1
+    CLOUDSDK_INSTALL_DIR: /tmp
     APP_NAME: demo-node
     DOCKER_IMAGE: demo-node
     PROJECT_NAME: haxweb-fr
@@ -15,26 +15,26 @@ machine:
     - docker
 
 dependencies:
-  cache_directories:
-    - ~/google-cloud-sdk
   pre:
     - >
+       if [ -n "$GCLOUD_SERVICE_KEY" ]; then sudo apt-get remove python-virtualenv python-openssl python3-openssl ;
         sudo apt-get update;
         sudo apt-get install python-openssl python3-openssl ;
+        sudo rm -rf /opt/google-cloud-sdk/ ;
+        curl https://sdk.cloud.google.com | bash ;
         source ~/.bashrc ;
+       fi
 deployment:
   prod:
     branch: master
     commands:
-      - echo $PWD && ls -la
-      - export CLOUDSDK_PYTHON_SITEPACKAGES=1
       - echo ${ACCT_AUTH} | base64 -d > account-auth.json
-      - sudo /opt/google-cloud-sdk/bin/gcloud auth activate-service-account ${SERVICE_ACCOUNT} --key-file account-auth.json
-      - sudo /opt/google-cloud-sdk/bin/gcloud config set project $PROJECT_NAME
-      - sudo /opt/google-cloud-sdk/bin/gcloud --quiet config set container/cluster $CLUSTER_NAME
+      - /tmp/google-cloud-sdk/bin/gcloud auth activate-service-account ${SERVICE_ACCOUNT} --key-file account-auth.json
+      - /tmp/google-cloud-sdk/bin/gcloud config set project $PROJECT_NAME
+      - /tmp/google-cloud-sdk/bin/gcloud --quiet config set container/cluster $CLUSTER_NAME
       # Reading the zone from the env var is not working so we set it here
-      - sudo /opt/google-cloud-sdk/bin/gcloud config set compute/zone ${CLOUDSDK_COMPUTE_ZONE}
-      - sudo /opt/google-cloud-sdk/bin/gcloud --quiet container clusters get-credentials $CLUSTER_NAME
+      - /tmp/google-cloud-sdk/bin/gcloud config set compute/zone ${CLOUDSDK_COMPUTE_ZONE}
+      - /tmp/google-cloud-sdk/bin/gcloud --quiet container clusters get-credentials $CLUSTER_NAME
       - docker build -t gcr.io/${PROJECT_NAME}/${DOCKER_IMAGE}:$CIRCLE_SHA1 .
       # Using a separate tag command until Docker 1.10 is available on CircleCI, then we can use two tags in the build command above
       - docker tag us.gcr.io/${PROJECT_NAME}/${DOCKER_IMAGE}:$CIRCLE_SHA1 gcr.io/${PROJECT_NAME}/${DOCKER_IMAGE}:latest
