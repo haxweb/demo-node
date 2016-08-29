@@ -1,7 +1,7 @@
 achine:
   environment:
-    APP_NAME: node
-    DOCKER_IMAGE: node
+    APP_NAME: demo-node
+    DOCKER_IMAGE: demo-node
     PROJECT_NAME: haxweb-fr
     CLUSTER_NAME: haxweb-fr
     CLOUDSDK_COMPUTE_ZONE: europe-west1-c
