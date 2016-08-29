@@ -27,6 +27,7 @@ deployment:
     branch: master
     commands:
       - echo $PWD && ls -la
+      - echo ${ACCT_AUTH} | base64 -d > account-auth.json
       - sudo /opt/google-cloud-sdk/bin/gcloud auth activate-service-account ${SERVICE_ACCOUNT} --key-file account-auth.json
       - sudo /opt/google-cloud-sdk/bin/gcloud config set project $PROJECT_NAME
       - sudo /opt/google-cloud-sdk/bin/gcloud --quiet config set container/cluster $CLUSTER_NAME
