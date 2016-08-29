@@ -1,0 +1,14 @@
+{
+  "name": "Garage56",
+  "version": "1.0.0",
+  "description": "Hello App Node",
+  "author": "Axel Agarrat <axelagarrat@gmail.com>",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.13.3",
+    "firebase" : "^3.0.0"
+  }
+}
