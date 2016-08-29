@@ -26,7 +26,8 @@ deployment:
   prod:
     branch: master
     commands:
-      - sudo /opt/google-cloud-sdk/bin/gcloud auth activate-service-account ${SERVICE_ACCOUNT} --key-file ${HOME}/account-auth.json
+      - echo $PWD && ls -la
+      - sudo /opt/google-cloud-sdk/bin/gcloud auth activate-service-account ${SERVICE_ACCOUNT} --key-file account-auth.json
       - sudo /opt/google-cloud-sdk/bin/gcloud config set project $PROJECT_NAME
       - sudo /opt/google-cloud-sdk/bin/gcloud --quiet config set container/cluster $CLUSTER_NAME
       # Reading the zone from the env var is not working so we set it here
