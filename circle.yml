@@ -16,6 +16,7 @@ dependencies:
   pre:
     - echo $ACCT_AUTH | base64 --decode -i > ${HOME}/account-auth.json
     - pip install pyopenssl
+    - source ~/.bashrc
     - sudo /opt/google-cloud-sdk/bin/gcloud --quiet components update
     - sudo /opt/google-cloud-sdk/bin/gcloud --quiet components update kubectl
     - sudo /opt/google-cloud-sdk/bin/gcloud auth activate-service-account ${SERVICE_ACCOUNT} --key-file ${HOME}/account-auth.json
