@@ -32,7 +32,7 @@ deployment:
       - google-cloud-sdk/install.sh --quiet --path-update false --usage-reporting false --command-completion false --bash-completion false
       - source ~/.bashrc
       - export CLOUDSDK_CORE_DISABLE_PROMPTS=0
-      - /home/ubuntu/demo-node/google-cloud-sdk/bin/gcloud auth activate-service-account ${SERVICE_ACCOUNT} --key-file account-auth.json
+      - /home/ubuntu/demo-node/google-cloud-sdk/bin/gcloud auth activate-service-account ${SERVICE_ACCOUNT} --key-file service-account.json
       - /home/ubuntu/demo-node/google-cloud-sdk/bin/gcloud config set project $PROJECT_NAME
       - /home/ubuntu/demo-node/google-cloud-sdk/bin/gcloud --quiet config set container/cluster $CLUSTER_NAME
       # Reading the zone from the env var is not working so we set it here
