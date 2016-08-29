@@ -16,16 +16,11 @@ machine:
 
 dependencies:
   pre:
-     ->
-       export DIRECTORY="/home/GoogleCloudSDK/google-cloud-sdk/bin" ;
-       if [ ! -d "$DIRECTORY" ]; then ;
-        cd /home ;
-	wget https://dl.google.com/dl/cloudsdk/release/google-cloud-sdk.zip -O google-cloud-sdk.zip ;
-	unzip -o google-cloud-sdk.zip -d ./GoogleCloudSDK/ ;
-	./GoogleCloudSDK/google-cloud-sdk/install.sh ;
-       fi ;
-export PATH=/var/jenkins_home/GoogleCloudSDK/google-cloud-sdk/bin:$PATH
-
+    - cd /home ;
+    - get https://dl.google.com/dl/cloudsdk/release/google-cloud-sdk.zip -O google-cloud-sdk.zip
+    - unzip -o google-cloud-sdk.zip -d ./GoogleCloudSDK/
+    - ./GoogleCloudSDK/google-cloud-sdk/install.sh
+    - export PATH=/home/GoogleCloudSDK/google-cloud-sdk/bin:$PATH
 gcloud --quiet components update
 deployment:
   prod:
