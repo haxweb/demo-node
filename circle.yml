@@ -14,19 +14,21 @@ machine:
   services:
     - docker
 
-dependencies:
-  pre:
-    - cd /home
-    - get https://dl.google.com/dl/cloudsdk/release/google-cloud-sdk.zip -O google-cloud-sdk.zip
-    - unzip -o google-cloud-sdk.zip -d ./GoogleCloudSDK/
-    - ./GoogleCloudSDK/google-cloud-sdk/install.sh
-    - export PATH=/home/GoogleCloudSDK/google-cloud-sdk/bin:$PATH
 gcloud --quiet components update
 deployment:
   prod:
     branch: master
     commands:
       - echo ${ACCT_AUTH} | base64 -d > account-auth.json
+      - sudo apt-get remove python-virtualenv python-openssl python3-openssl
+      - sudo apt-get update
+      - sudo apt-get install python-openssl python3-openssl
+      - sudo rm -rf /opt/google-cloud-sdk/
+      - export CLOUDSDK_CORE_DISABLE_PROMPTS=1
+      - export CLOUDSDK_PYTHON_SITEPACKAGES=1
+      - curl https://sdk.cloud.google.com | bash
+      - source ~/.bashrc
+      - export CLOUDSDK_CORE_DISABLE_PROMPTS=0
       - gcloud auth activate-service-account ${SERVICE_ACCOUNT} --key-file account-auth.json
       - gcloud config set project $PROJECT_NAME
       - gcloud --quiet config set container/cluster $CLUSTER_NAME
