@@ -1,4 +1,4 @@
-achine:
+machine:
   environment:
     APP_NAME: demo-node
     DOCKER_IMAGE: demo-node
