@@ -1,6 +1,7 @@
 machine:
   environment:
     SERVICE_ACCOUNT: haxweb-fr@haxweb-fr.iam.gserviceaccount.com
+    CLOUDSDK_PYTHON_SITEPACKAGES: 1
     APP_NAME: demo-node
     DOCKER_IMAGE: demo-node
     PROJECT_NAME: haxweb-fr
@@ -16,6 +17,7 @@ dependencies:
     - sudo /opt/google-cloud-sdk/bin/gcloud --quiet components update
     - sudo /opt/google-cloud-sdk/bin/gcloud --quiet components update kubectl
     - echo $ACCT_AUTH | base64 --decode -i > ${HOME}/account-auth.json
+    - sudo apt-get -y -qq install python-openssl
     - sudo /opt/google-cloud-sdk/bin/gcloud auth activate-service-account ${SERVICE_ACCOUNT} --key-file ${HOME}/account-auth.json
     - sudo /opt/google-cloud-sdk/bin/gcloud config set project $PROJECT_NAME
     - sudo /opt/google-cloud-sdk/bin/gcloud --quiet config set container/cluster $CLUSTER_NAME
