@@ -30,7 +30,7 @@ deployment:
       - echo ${ACCT_AUTH} | base64 -d > account-auth.json
       - export CLOUDSDK_PYTHON_SITEPACKAGES=1
       - export CLOUDSDK_INSTALL_DIR=/tmp
-      - echo "CLoud SDK ENV : $CLOUDSDK_PYTHON_SITEPACKAGES"
+      - env
       - /tmp/google-cloud-sdk/bin/gcloud auth activate-service-account ${SERVICE_ACCOUNT} --key-file account-auth.json
       - /tmp/google-cloud-sdk/bin/gcloud config set project $PROJECT_NAME
       - /tmp/google-cloud-sdk/bin/gcloud --quiet config set container/cluster $CLUSTER_NAME
