@@ -18,18 +18,19 @@ dependencies:
   pre:
     - >
         sudo apt-get remove python-virtualenv python-openssl python3-openssl ;
-        pip install pyopenssl
+        sudo apt-get update;
+        sudo apt-get install python-openssl python3-openssl ;
         sudo rm -rf /opt/google-cloud-sdk/ ;
+        sudo cat ~/.bashrc | sudo sed -e "s/source '\/opt\/google-cloud-sdk\/path.bash.inc'//" > ~/.bashrc
+        sudo cat ~/.bashrc | sudo sed -e "s/source '\/opt\/google-cloud-sdk\/completion.bash.inc'//" > ~/.bashrc
         curl https://sdk.cloud.google.com | bash ;
         source ~/.bashrc ;
 deployment:
   prod:
     branch: master
     commands:
-      - source ~/.bashrc
       - echo ${ACCT_AUTH} | base64 -d > account-auth.json
       - export CLOUDSDK_PYTHON_SITEPACKAGES=1
-      - export CLOUDSDK_INSTALL_DIR=/tmp
       - env
       - /tmp/google-cloud-sdk/bin/gcloud auth activate-service-account ${SERVICE_ACCOUNT} --key-file account-auth.json
       - /tmp/google-cloud-sdk/bin/gcloud config set project $PROJECT_NAME
