@@ -12,7 +12,7 @@ appreplication=$(`$CLOUDSDK_INSTALL_DIR/google-cloud-sdk/bin/kubectl get rc | gr
 
 if [ "$appreplication" == "" ]; then
         echo "Application ${APP_NAME} not yet deployed. deploying..."
-	${CLOUDSDK_INSTALL_DIR}/google-cloud-sdk/bin/kubectl create -f replica.yml -f service.yml
+	${CLOUDSDK_INSTALL_DIR}/google-cloud-sdk/bin/kubectl create -f /home/ubuntu/${APP_NAME}/replica.yml -f /home/ubuntu/${APP_NAME}/service.yml
 else
         echo "Application replication controller found, patching ${APP_NAME} with new image..."
 	${CLOUDSDK_INSTALL_DIR}/google-cloud-sdk/bin/kubectl patch rc ${APP_NAME} \
