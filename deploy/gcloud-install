@@ -24,6 +24,7 @@ function printUsage
 	echo "     --sdk-home|-home   SDK_HOME  : The path to install GCloud SDK to"
         echo "     --key-file|-k      KEY_FILE  : The path to the Service Account Key file"
         echo "     --account|-a       ACCOUNT   : The service account id ( ex: email )"
+        echo "     [--project|-p]     PROJECT   : The default project to configure"
 	echo "     [--cluster]        CLUSTER   : The cluster to login in"
 	echo "     [--update-path|-p]           : Should update path with GCloud SDK bin"
 	echo ""
@@ -65,6 +66,11 @@ while [ "$#" -gt 0 ] ; do
 	"--cluster" | "-c" )
 		shift
 		cluster="$1"
+	;;
+
+	"--project" | "-p" )
+		shift
+		project="$1"
 	;;
 	esac
 	shift
@@ -108,9 +114,15 @@ cd $sdkhome
 $sdkhome/google-cloud-sdk/bin/gcloud --quiet components install kubectl
 echo "Done"
 
+if [ "$project" != "" ]; then
+	echo "Setting default project..."
+	$sdkhome/google-cloud-sdk/bin/gcloud config set project $project
+	echo "Done."
+fi
+
 if [ "$cluster" != "" ]; then
 	echo "Authenticating on kubernetes cluster..."
-	$sdkhome/google-cloud-sdk/bin/gcloud --quiet container clusters get-credentials "$cluster" | bash -
+	$sdkhome/google-cloud-sdk/bin/gcloud --quiet container clusters get-credentials "$cluster"
 	echo "Done."
 fi
 
