@@ -7,7 +7,7 @@ RUN mkdir /usr/src/app
 WORKDIR /usr/src/app
 
 # Copy sources & install app dependencies
-COPY project/ /usr/src/app/
+COPY . /usr/src/app/
 RUN npm install
 
 # Expose outside the container, the following port list :
