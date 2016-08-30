@@ -35,6 +35,7 @@ deployment:
       - /home/ubuntu/demo-node/google-cloud-sdk/bin/gcloud auth activate-service-account ${SERVICE_ACCOUNT} --key-file account-auth.json
       - /home/ubuntu/demo-node/google-cloud-sdk/bin/gcloud config set project $PROJECT_NAME
       - /home/ubuntu/demo-node/google-cloud-sdk/bin/gcloud --quiet config set container/cluster $CLUSTER_NAME
+      - /home/ubuntu/demo-node/google-cloud-sdk/bin/gcloud components install kubectl
       # Reading the zone from the env var is not working so we set it here
       - /home/ubuntu/demo-node/google-cloud-sdk/bin/gcloud config set compute/zone ${CLOUDSDK_COMPUTE_ZONE}
       - /home/ubuntu/demo-node/google-cloud-sdk/bin/gcloud --quiet container clusters get-credentials $CLUSTER_NAME
