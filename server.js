@@ -34,7 +34,7 @@ https.createServer({
 
 app.get('/', function(req, res) {
   res.header('Content-type', 'text/html');
-  return res.end('<h1>Hello Garage56 With HTTPS WORKS!</h1>');
+  return res.end('<h1>Hello Garage56 ROCKS WITH HTTPS!</h1>');
 });
 
 console.log('Running on :' + PORT);
