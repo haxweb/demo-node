@@ -23,6 +23,6 @@ deployment:
       - sudo apt-get remove python-virtualenv python-openssl python3-openssl
       - sudo apt-get update
       - sudo apt-get install python-openssl python3-openssl
-      - deploy/gcloud-install --sdk-home ${CLOUDSDK_INSTALL_DIR} --key-file /home/ubuntu/account-auth.json --account ${SERVICE_ACCOUNT} --cluster ${CLUSTER_NAME}
+      - deploy/gcloud-install --sdk-home ${CLOUDSDK_INSTALL_DIR} --key-file /home/ubuntu/account-auth.json --account ${SERVICE_ACCOUNT} --cluster ${CLUSTER_NAME} --project ${PROJECT_NAME}
       - deploy/deploy.sh
 
