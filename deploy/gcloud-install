@@ -62,7 +62,7 @@ while [ "$#" -gt 0 ] ; do
 		updatepath="true"
 	;;
 
-	"--c" | "-c" )
+	"--cluster" | "-c" )
 		shift
 		cluster="$1"
 	;;
