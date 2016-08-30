@@ -118,9 +118,7 @@ echo "Exporting service account to env..."
 export GOOGLE_APPLICATION_CREDENTIALS=${keyfile}
 echo "Done."
 
-if [ "$updatepath" == "true" ]; then
-	source ~/.bashrc
-fi
+source ~/.bashrc
 
 echo ""
 echo "Installation finished."
