@@ -14,4 +14,4 @@ spec:
       - name: node-container
         image: __IMAGE__
         ports:
-- containerPort: 443
+        - containerPort: 443
