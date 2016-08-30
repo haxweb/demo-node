@@ -1,0 +1,127 @@
+#!/bin/bash
+
+GCLOUD_SDK_REPO="https://dl.google.com/dl/cloudsdk/channels/rapid/downloads"
+GCLOUD_SDK_ARCHIVE="google-cloud-sdk-123.0.0-linux-x86_64.tar.gz"
+
+updatepath="false"
+
+set -e
+
+echo "++++++++++++++++"
+echo "GCloud Installer"
+echo "++++++++++++++++"
+echo ""
+
+function exit_error
+{
+	echo "ERROR : $1"
+	exit 1
+}
+
+function printUsage
+{
+	echo "Usage : gcloud-install"
+	echo "     --sdk-home|-home   SDK_HOME  : The path to install GCloud SDK to"
+        echo "     --key-file|-k      KEY_FILE  : The path to the Service Account Key file"
+        echo "     --account|-a       ACCOUNT   : The service account id ( ex: email )"
+	echo "     [--cluster]        CLUSTER   : The cluster to login in"
+	echo "     [--update-path|-p]           : Should update path with GCloud SDK bin"
+	echo ""
+}
+
+if [ "$#" -eq 0 ]; then
+	printUsage
+	exit
+fi
+
+
+while [ "$#" -gt 0 ] ; do
+	echo $1
+	case "$1" in
+
+	"--help" | "-h" )
+		printUsage
+	;;
+
+	"--sdk-home" | "-home" )
+		shift
+		sdkhome="$1"
+	;;
+
+	"--key-file" | "-k" )
+		shift
+		keyfile="$1"
+	;;
+
+	"--account" | "-a" )
+		shift
+		account="$1"
+	;;
+
+	"--update-path" | "-up-path" )
+		updatepath="true"
+	;;
+
+	"--c" | "-c" )
+		shift
+		cluster="$1"
+	;;
+	esac
+	shift
+done
+
+if [ ! -d "$sdkhome" ]; then
+	exit_error "GCloud SDK Home [ $sdkhome ] not a directory"
+fi
+
+if [ ! -f "$keyfile" ]; then
+	exit_error "Service Account Key File [ $keyfile ] not find"
+fi
+
+####################################
+# DOWNLOADING GCLOUD SDK AND INSTALL
+####################################
+
+cd "$sdkhome"
+wget "${GCLOUD_SDK_REPO}/${GCLOUD_SDK_ARCHIVE}" \
+	&& tar -zxvf ${GCLOUD_SDK_ARCHIVE} \
+	&& rm ${GCLOUD_SDK_ARCHIVE} \
+
+cd ${sdkhome}/google-cloud-sdk
+
+./install.sh --quiet \
+	--path-update $updatepath \
+	--usage-reporting false \
+	--command-completion true \
+	--bash-completion true
+
+echo "Activating service account ${account}..."
+${sdkhome}/google-cloud-sdk/bin/gcloud auth activate-service-account ${account} --key-file ${keyfile}
+echo "Done."
+
+#########################
+# INSTALING kubectl
+#########################
+
+echo "Installing kubectl component..."
+cd $sdkhome
+$sdkhome/google-cloud-sdk/bin/gcloud --quiet components install kubectl
+echo "Done"
+
+if [ "$cluster" != "" ]; then
+	echo "Authenticating on kubernetes cluster..."
+	$sdkhome/google-cloud-sdk/bin/gcloud --quiet container clusters get-credentials "$cluster" | bash -
+	echo "Done."
+fi
+
+echo "Exporting service account to env..."
+export GOOGLE_APPLICATION_CREDENTIALS=${keyfile}
+echo "Done."
+
+if [ "$updatepath" == "true" ]; then
+	source ~/.bashrc
+fi
+
+echo ""
+echo "Installation finished."
+

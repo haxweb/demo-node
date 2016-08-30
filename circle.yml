@@ -24,20 +24,10 @@ deployment:
       - sudo apt-get update
       - sudo apt-get install python-openssl python3-openssl
       - sudo rm -rf /opt/google-cloud-sdk/
-      - wget https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-sdk-123.0.0-linux-x86_64.tar.gz
-      - tar -zxvf google-cloud-sdk-123.0.0-linux-x86_64.tar.gz
-      - rm google-cloud-sdk-123.0.0-linux-x86_64.tar.gz
-      - google-cloud-sdk/install.sh --quiet --path-update false --usage-reporting false --command-completion false --bash-completion false
-      - export CLOUDSDK_CORE_DISABLE_PROMPTS=0
-      - /home/ubuntu/demo-node/google-cloud-sdk/bin/gcloud auth activate-service-account ${SERVICE_ACCOUNT} --key-file account-auth.json
-      - /home/ubuntu/demo-node/google-cloud-sdk/bin/gcloud config set project $PROJECT_NAME
-      - /home/ubuntu/demo-node/google-cloud-sdk/bin/gcloud --quiet config set container/cluster $CLUSTER_NAME
-      - /home/ubuntu/demo-node/google-cloud-sdk/bin/gcloud components install kubectl
-      - /home/ubuntu/demo-node/google-cloud-sdk/bin/gcloud config set compute/zone ${CLOUDSDK_COMPUTE_ZONE}
-      - /home/ubuntu/demo-node/google-cloud-sdk/bin/gcloud --quiet container clusters get-credentials $CLUSTER_NAME
+      - deploy/gcloud-install --sdk-home ${CLOUDSDK_INSTALL_DIR} --key-file account-auth.json --account ${SERVICE_ACCOUNT} --cluster ${CLUSTER_NAME}
       - docker build -t gcr.io/${PROJECT_NAME}/${DOCKER_IMAGE}:$CIRCLE_SHA1 .
       - docker tag gcr.io/${PROJECT_NAME}/${DOCKER_IMAGE}:$CIRCLE_SHA1 gcr.io/${PROJECT_NAME}/${DOCKER_IMAGE}:latest
-      - /home/ubuntu/demo-node/google-cloud-sdk/bin/gcloud docker push gcr.io/${PROJECT_NAME}/${DOCKER_IMAGE}:$CIRCLE_SHA1
+      - ${CLOUDSDK_INSTALL_DIR}/google-cloud-sdk/bin/gcloud docker push gcr.io/${PROJECT_NAME}/${DOCKER_IMAGE}:$CIRCLE_SHA1
       - sudo chown -R ubuntu:ubuntu /home/ubuntu/.kube
-      - /home/ubuntu/demo-node/google-cloud-sdk/bin/kubectl patch rc ${APP_NAME} -p '{"spec":{"template":{"spec":{"containers":[{"name":"'${APP_NAME}'","image":"gcr.io/${PROJECT_NAME}/${DOCKER_IMAGE}:'"$CIRCLE_SHA1"'"}]}}}}'
+      - ${CLOUDSDK_INSTALL_DIR}/google-cloud-sdk/bin/kubectl patch rc ${APP_NAME} -p '{"spec":{"template":{"spec":{"containers":[{"name":"'${APP_NAME}'","image":"gcr.io/${PROJECT_NAME}/${DOCKER_IMAGE}:'"$CIRCLE_SHA1"'"}]}}}}'
 
