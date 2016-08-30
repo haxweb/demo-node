@@ -10,7 +10,7 @@ appreplication=`$CLOUDSDK_INSTALL_DIR/google-cloud-sdk/bin/kubectl get deploymen
 
 
 echo "Update image tag with circle sha1 version..."
-sed -i -e "s/__IMAGE__/gcr\/.io\/$PROJECT_NAME\/$DOCKER_IMAGE:$CIRCLE_SHA1/" deploy/replica.yml
+sed -i -e "s/__IMAGE__/gcr.io\/$PROJECT_NAME\/$DOCKER_IMAGE:$CIRCLE_SHA1/" deploy/replica.yml
 cat deploy/replica.yml
 echo "Done."
 
