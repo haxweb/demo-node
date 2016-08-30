@@ -12,6 +12,6 @@ spec:
     spec:
       containers:
       - name: node-container
-        image: gcr.io/haxweb-fr/demo-node
+        image: __IMAGE__
         ports:
         - containerPort: 443
