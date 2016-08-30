@@ -1,0 +1,30 @@
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: demo-node
+spec:
+  replicas: 2
+  selector:
+    app: demo-node
+  template:
+    metadata:
+      name: node-instance
+      labels:
+        app: demo-node
+    spec:
+      containers:
+      - name: node-container
+        image: gcr.io/haxweb-fr/demo-node:latest
+        ports:
+        - containerPort: 443
+#    volumeMounts:
+"          # Name must match the volume name below.
+#        - name: node-persistent-storage
+#          # Mount path within the container.
+#          mountPath: /usr/src/app
+#volumes:
+#    - name: node-persistent-storage
+#    gcePersistentDisk:
+#       # This GCE persistent disk must already exist.
+#       pdName: node-persistent-storage
+#       fsType: ext4
