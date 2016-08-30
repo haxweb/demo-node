@@ -1,11 +1,9 @@
-apiVersion: v1
-kind: ReplicationController
+apiVersion: extensions/v1beta1
+kind: Deployment
 metadata:
   name: demo-node
 spec:
   replicas: 2
-  selector:
-    app: demo-node
   template:
     metadata:
       name: node-instance
