@@ -90,7 +90,7 @@ fi
 
 cd "$sdkhome"
 wget "${GCLOUD_SDK_REPO}/${GCLOUD_SDK_ARCHIVE}" \
-	&& tar -zxvf ${GCLOUD_SDK_ARCHIVE} \
+	&& tar -zxf ${GCLOUD_SDK_ARCHIVE} \
 	&& rm ${GCLOUD_SDK_ARCHIVE} \
 
 cd ${sdkhome}/google-cloud-sdk
