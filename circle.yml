@@ -27,7 +27,8 @@ deployment:
       - sudo cat /home/ubuntu/.bashrc | sed -e "s/source '\/home\/google-cloud-sdk\/path.bash.inc'//" > /home/ubuntu/.bashrc
       - sudo cat /home/ubuntu/.bashrc | sed -e "s/source '\/home\/google-cloud-sdk\/completion.bash.inc'//" > /home/ubuntu/.bashrc
       - wget https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-sdk-123.0.0-linux-x86_64.tar.gz
-      - tar -zxvf google-cloud-sdk-123.0.0-linux-x86_64.tar.gz -C ${CLOUDSDK_INSTALL_DIR}
+      - env
+      - tar -zxvf google-cloud-sdk-123.0.0-linux-x86_64.tar.gz
       - rm google-cloud-sdk-123.0.0-linux-x86_64.tar.gz
       - google-cloud-sdk/install.sh --quiet --path-update false --usage-reporting false --command-completion false --bash-completion false
       - export CLOUDSDK_CORE_DISABLE_PROMPTS=0
