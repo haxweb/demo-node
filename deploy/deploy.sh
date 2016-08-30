@@ -1,18 +1,19 @@
 #!/bin/bash
 
 # Exit on any error
-set -e
 
-docker build -t gcr.io/${PROJECT_NAME}/${DOCKER_IMAGE}:$CIRCLE_SHA1 .
+#docker build -t gcr.io/${PROJECT_NAME}/${DOCKER_IMAGE}:$CIRCLE_SHA1 .
 
-docker tag gcr.io/${PROJECT_NAME}/${DOCKER_IMAGE}:$CIRCLE_SHA1 gcr.io/${PROJECT_NAME}/${DOCKER_IMAGE}:latest
+#docker tag gcr.io/${PROJECT_NAME}/${DOCKER_IMAGE}:$CIRCLE_SHA1 gcr.io/${PROJECT_NAME}/${DOCKER_IMAGE}:latest
 
-${CLOUDSDK_INSTALL_DIR}/google-cloud-sdk/bin/gcloud docker push gcr.io/${PROJECT_NAME}/${DOCKER_IMAGE}:$CIRCLE_SHA1
+#${CLOUDSDK_INSTALL_DIR}/google-cloud-sdk/bin/gcloud docker push gcr.io/${PROJECT_NAME}/${DOCKER_IMAGE}:$CIRCLE_SHA1
+CLOUDSDK_INSTALL_DIR=/home
+APP_NAME=demo-node
 
-
-appreplication=$(`${CLOUDSDK_INSTALL_DIR}/google-cloud-sdk/bin/kubectl get rc | grep $APP_NAME`)
+appreplication=$(`$CLOUDSDK_INSTALL_DIR/google-cloud-sdk/bin/kubectl get rc | grep $APP_NAME`)
 
 if [ "$appreplication" == "" ]; then
+	echo "BLBAL"
         echo "Application ${APP_NAME} not yet deployed. deploying..."
 	${CLOUDSDK_INSTALL_DIR}/google-cloud-sdk/bin/kubectl create -f replica.yml -f service.yml
 else
