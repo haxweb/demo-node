@@ -19,7 +19,7 @@ deployment:
   prod:
     branch: master
     commands:
-      - echo ${ACCT_AUTH} | base64 -d > account-auth.json
+      - echo ${ACCT_AUTH} | base64 -d > /home/ubuntu/account-auth.json
       - sudo apt-get remove python-virtualenv python-openssl python3-openssl
       - sudo apt-get update
       - sudo apt-get install python-openssl python3-openssl
