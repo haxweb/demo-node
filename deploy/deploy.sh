@@ -8,9 +8,11 @@ ${CLOUDSDK_INSTALL_DIR}/google-cloud-sdk/bin/gcloud docker push gcr.io/${PROJECT
 
 appreplication=`$CLOUDSDK_INSTALL_DIR/google-cloud-sdk/bin/kubectl get deployments | grep "$APP_NAME"`
 
-cat deploy/replica.yml | sed -e 's/__IMAGE__/gcr\/.io/$PROJECT_NAME\/$DOCKER_IMAGE:$CIRCLE_SHA1' > deploy/replica.yml
 
+echo "Update image tag with circle sha1 version..."
+sed -i -e "s/__IMAGE__/gcr\/.io\/$PROJECT_NAME\/$DOCKER_IMAGE:$CIRCLE_SHA1/" deploy/replica.yml
 cat deploy/replica.yml
+echo "Done."
 
 if [ "$appreplication" == "" ]; then
         echo "Application ${APP_NAME} not yet deployed. deploying..."
