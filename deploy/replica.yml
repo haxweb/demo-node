@@ -1,14 +1,14 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: demo-node
+  name: __APP_NAME__
 spec:
   replicas: 2
   template:
     metadata:
       name: node-instance
       labels:
-        app: demo-node
+        app: __APP_NAME__
     spec:
       containers:
       - name: node-container
