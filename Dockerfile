@@ -11,7 +11,7 @@ COPY . /usr/src/app/
 RUN npm install
 
 # Expose outside the container, the following port list :
-EXPOSE 8080 80 443
+EXPOSE 80 443
 
 # start the app with npm start
 CMD [ "npm", "start" ]
