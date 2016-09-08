@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: __APP_NAME__
 spec:
-  replicas: 2
+  replicas: 4
   template:
     metadata:
       name: node-instance

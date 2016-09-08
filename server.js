@@ -34,7 +34,7 @@ https.createServer({
 
 app.get('/demo', function(req, res) {
   res.header('Content-type', 'text/html');
-  return res.end('<h1>Hello Garage56 ! Demo App1 !</h1>');
+  return res.end('<h1>Hello Garage56 ! Super ca fonctionne et ca update</h1>');
 });
 
 console.log('Running on :' + PORT);
