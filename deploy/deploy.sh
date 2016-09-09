@@ -19,9 +19,6 @@ sed -i -e "s/__APP_NAME__/$APP_NAME/g" deploy/service.yml
 echo deploy/replica.yml
 echo "Done."
 
-
-APP_NAME
-
 if [ "$appreplication" == "" ]; then
         echo "Application ${APP_NAME} not yet deployed. deploying..."
 	${CLOUDSDK_INSTALL_DIR}/google-cloud-sdk/bin/kubectl create -f deploy/replica.yml -f deploy/service.yml
