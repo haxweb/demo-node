@@ -98,8 +98,8 @@ cd ${sdkhome}/google-cloud-sdk
 ./install.sh --quiet \
 	--path-update $updatepath \
 	--usage-reporting false \
-	--command-completion true \
-	--bash-completion true
+	--command-completion false \
+	--bash-completion false
 
 echo "Activating service account ${account}..."
 ${sdkhome}/google-cloud-sdk/bin/gcloud auth activate-service-account ${account} --key-file ${keyfile}
