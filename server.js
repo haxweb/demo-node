@@ -21,7 +21,7 @@ var article = ref.child("articles");
 article.set({
 	1 : {
 		date : "May 27, 1987",
-		name : "My First article",
+		name : "My First article BLBALBA",
 		content : "Content"
 	} 
 });
